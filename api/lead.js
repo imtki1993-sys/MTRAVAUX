@@ -6,7 +6,7 @@
 
 // URL de l'application Web Google Apps Script (se termine par /exec).
 // Vous pouvez aussi la définir sur Vercel : Settings › Environment Variables › GOOGLE_SCRIPT_URL
-const RAW_SCRIPT_URL = process.env.GOOGLE_SCRIPT_URL || "https://script.google.com/macros/s/AKfycbzBRv1BE9Xzg5KshoOaAnQZWT8F4ok_mXYq572G_Y6El8bymj3dZao70B3p0xRZ1zOC/exec";
+const RAW_SCRIPT_URL = process.env.GOOGLE_SCRIPT_URL || "https://script.google.com/macros/s/AKfycbwrqUmQm7dsPIdZaY4XbyU4z_T47fE0lQwYj_MIlO23KYmVrOUgenr7SlnGBRzuR2FA/exec";
 
 // Nettoyage automatique : espaces, guillemets, paramètres ou « / » en trop, format compte Google professionnel (/a/macros/…)
 const SCRIPT_URL = String(RAW_SCRIPT_URL).trim().replace(/^["']|["']$/g, '').split(/[?#]/)[0].replace(/\/+$/, '');
