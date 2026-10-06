@@ -6,7 +6,7 @@
 
 // URL de l'application Web Google Apps Script (se termine par /exec).
 // Vous pouvez aussi la définir sur Vercel : Settings › Environment Variables › GOOGLE_SCRIPT_URL
-const SCRIPT_URL = process.env.GOOGLE_SCRIPT_URL || "https://script.google.com/macros/s/AKfycbwpO8Ltc40vtZDSraesxp2_QcgBiI4QFVBePz_ZLOw/dev";
+const SCRIPT_URL = process.env.GOOGLE_SCRIPT_URL || "https://script.google.com/macros/s/AKfycbzBRv1BE9Xzg5KshoOaAnQZWT8F4ok_mXYq572G_Y6El8bymj3dZao70B3p0xRZ1zOC/exec";
 
 const FIELDS = { nom: 120, telephone: 30, email: 120, ville: 120, profil: 60, travaux: 300,
                  surface: 120, demarrage: 60, message: 1500, source: 300, page: 300, rid: 64, website: 200 };
