@@ -356,7 +356,7 @@ form.addEventListener('submit', async (e) => {
         res = await r.json().catch(() => ({ ok: false, error: 'Réponse illisible (HTTP ' + r.status + ')' }));
         if (res.ok) break;
         lastErr = new Error(res.error || ('HTTP ' + r.status));
-        if (r.status < 500) break;                                 // erreur de saisie : inutile de réessayer
+        if (r.status < 500 || r.status === 504) break;            // saisie invalide ou Google trop lent : inutile de réessayer
       } catch (netErr) { lastErr = netErr; }
     }
     if (!res || !res.ok) throw lastErr || new Error('Envoi impossible');

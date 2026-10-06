@@ -18,10 +18,10 @@ m-infra-landing/
 Le formulaire envoie les demandes à **ton propre site** (`/api/lead`, fichier `api/lead.js`), qui les transmet à Google.
 C'est fiable sur PC, mobile et dans le navigateur de Facebook/Instagram, et chaque demande n'est écrite qu'**une seule fois**.
 
-1. Ouvre ta Google Sheet › **Extensions › Apps Script**, remplace tout par le contenu de `google-apps-script.gs` (version 4), enregistre.
+1. Ouvre ta Google Sheet › **Extensions › Apps Script**, remplace tout par le contenu de `google-apps-script.gs` (version 5), enregistre.
 2. **Déployer › Gérer les déploiements › ✏️ › Version : Nouvelle version › Déployer**
    (première fois : Nouveau déploiement › Application Web › Exécuter en tant que **Moi** › Accès **Tout le monde**).
-3. Vérifie : ouvre l'URL du script (finit par `/exec`) → `{"ok":true,"status":"en ligne","version":4}`.
+3. Vérifie : ouvre l'URL du script (finit par `/exec`) → `{"ok":true,"status":"en ligne","version":5}`.
 4. Colle cette URL dans **`api/lead.js`**, ligne `SCRIPT_URL` :
 
 ```js
