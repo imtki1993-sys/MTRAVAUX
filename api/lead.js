@@ -13,6 +13,31 @@ const SCRIPT_URL = String(RAW_SCRIPT_URL).trim().replace(/^["']|["']$/g, '').spl
 const URL_OK = /^https:\/\/script\.google\.com\/(?:a\/macros\/[^/]+|macros)\/s\/[\w-]+\/exec$/.test(SCRIPT_URL);
 const mask = u => u.replace(/\/s\/([\w-]{6})[\w-]+([\w-]{4})\//, '/s/$1…$2/');
 
+const https = require('https');
+const http = require('http');
+
+// Requête GET robuste vers Google : IPv4, redirections suivies à la main, délai maîtrisé
+function getText(url, timeoutMs, redirectsLeft = 5) {
+  return new Promise((resolve, reject) => {
+    const u = new URL(url);
+    const lib = u.protocol === 'http:' ? http : https;
+    const req = lib.get(u, { family: 4, headers: { 'User-Agent': 'M-INFRA-relais/1.0', 'Accept': 'application/json,*/*' } }, (resp) => {
+      const loc = resp.headers.location;
+      if (resp.statusCode >= 300 && resp.statusCode < 400 && loc) {
+        resp.resume();
+        if (redirectsLeft <= 0) return reject(new Error('Trop de redirections'));
+        return resolve(getText(new URL(loc, u).toString(), timeoutMs, redirectsLeft - 1));
+      }
+      let data = '';
+      resp.setEncoding('utf8');
+      resp.on('data', c => { data += c; if (data.length > 200000) req.destroy(new Error('Réponse trop longue')); });
+      resp.on('end', () => resolve({ status: resp.statusCode, text: data, finalUrl: u.hostname }));
+    });
+    req.setTimeout(timeoutMs, () => req.destroy(Object.assign(new Error('Google ne répond pas (délai de ' + Math.round(timeoutMs / 1000) + ' s dépassé)'), { name: 'TimeoutError' })));
+    req.on('error', reject);
+  });
+}
+
 const FIELDS = { nom: 120, telephone: 30, email: 120, ville: 120, profil: 60, travaux: 300,
                  surface: 120, demarrage: 60, message: 1500, source: 300, page: 300, rid: 64, website: 200 };
 
@@ -26,10 +51,11 @@ module.exports = async (req, res) => {
                   source: process.env.GOOGLE_SCRIPT_URL ? 'variable Vercel GOOGLE_SCRIPT_URL' : 'fichier api/lead.js' };
     if (URL_OK) {
       try {
-        const r = await fetch(SCRIPT_URL, { redirect: 'follow', signal: AbortSignal.timeout(15000) });
-        const t = await r.text();
-        try { out.google = JSON.parse(t); }
-        catch { out.google = 'Réponse non JSON (HTTP ' + r.status + ') : ' + t.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').slice(0, 160); }
+        const t0 = Date.now();
+        const r = await getText(SCRIPT_URL, 25000);
+        out.dureeGoogle = ((Date.now() - t0) / 1000).toFixed(1) + ' s';
+        try { out.google = JSON.parse(r.text); }
+        catch { out.google = 'Réponse non JSON (HTTP ' + r.status + ', ' + r.finalUrl + ') : ' + r.text.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').slice(0, 200); }
       } catch (e) { out.google = 'Injoignable : ' + (e.message || e); }
     }
     return res.status(200).json(out);
@@ -58,15 +84,12 @@ module.exports = async (req, res) => {
     return res.status(400).json({ ok: false, error: 'Numéro de téléphone invalide' });
   }
 
-  const ctrl = new AbortController();
-  const timer = setTimeout(() => ctrl.abort(), 20000);
   try {
-    const r = await fetch(SCRIPT_URL + '?' + params.toString(), { redirect: 'follow', signal: ctrl.signal });
-    const text = await r.text();
+    const r = await getText(SCRIPT_URL + '?' + params.toString(), 25000);
     let data;
-    try { data = JSON.parse(text); }
+    try { data = JSON.parse(r.text); }
     catch {
-      return res.status(502).json({ ok: false, error: 'Le script Google ne répond pas en JSON (HTTP ' + r.status + ') : accès « Tout le monde » ? version 5 déployée ?' });
+      return res.status(502).json({ ok: false, error: 'Le script Google ne répond pas en JSON (HTTP ' + r.status + ', ' + r.finalUrl + ') : accès « Tout le monde » ? autorisations accordées ? version 5 déployée ?' });
     }
     if (!data.ok) return res.status(502).json({ ok: false, error: data.error || 'Erreur du script Google' });
     if (data.saved !== true) {
@@ -74,8 +97,6 @@ module.exports = async (req, res) => {
     }
     return res.status(200).json({ ok: true, duplicate: !!data.duplicate, sheet: data.sheet, onglet: data.onglet, ligne: data.ligne });
   } catch (err) {
-    return res.status(504).json({ ok: false, error: err.name === 'AbortError' ? 'Google ne répond pas (délai dépassé)' : String(err.message || err) });
-  } finally {
-    clearTimeout(timer);
+    return res.status(504).json({ ok: false, error: String(err.message || err) });
   }
 };
