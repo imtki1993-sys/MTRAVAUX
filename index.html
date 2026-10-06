@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M-INFRA · Travaux VRD au Maroc · Devis gratuit sous 48 h</title>
+<meta name="description" content="M-INFRA, entreprise VRD : terrassement, voirie, eau potable, assainissement, réseaux secs et viabilisation. Devis gratuit sous 48 h.">
+<meta property="og:title" content="M-INFRA · Du terrain nu au projet prêt à bâtir">
+<meta property="og:description" content="Terrassement, voirie, eau potable, assainissement. Devis gratuit sous 48 h.">
+<meta property="og:image" content="images/terrassement.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#16181A; --panel:#22262A; --line:#363B41; --text:#FFFFFF; --muted:#C9CDD2;
+  --accent:#F5B800; --accent-dark:#D9A300; --ok:#7BC043; --err:#FF6B57;
+  --display:'Barlow Condensed',sans-serif; --body:'Barlow',sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ink);color:var(--text);font-family:var(--body);font-size:18px;line-height:1.5}
+img{max-width:100%;display:block}
+a{color:var(--accent)}
+.wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+.stripe{height:14px;background:repeating-linear-gradient(-45deg,var(--accent) 0 20px,var(--ink) 20px 40px)}
+h1,h2,h3{font-family:var(--display);text-transform:uppercase;line-height:.95;margin:0;letter-spacing:-.5px}
+.eyebrow{font-family:var(--display);font-weight:700;letter-spacing:4px;color:var(--accent);font-size:18px;text-transform:uppercase;margin-bottom:10px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:14px 28px;background:var(--accent);color:var(--ink);font-family:var(--display);font-weight:800;font-size:22px;text-transform:uppercase;text-decoration:none;border:0;cursor:pointer;letter-spacing:.5px}
+.btn:hover{background:var(--accent-dark);color:var(--ink)}
+.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+section{padding:72px 0}
+.section-title{font-size:clamp(40px,6vw,64px);margin-bottom:36px}
+
+/* Header */
+header.top{position:sticky;top:0;z-index:20;background:var(--ink);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;min-height:68px;gap:16px}
+.brand{font-family:var(--display);font-weight:800;font-size:28px;letter-spacing:1px;color:var(--text);text-decoration:none}
+.brand small{display:block;font-weight:600;font-size:13px;letter-spacing:3px;color:var(--muted)}
+header.top .btn{font-size:18px;min-height:44px;padding:10px 18px}
+
+/* Hero */
+.hero{position:relative;padding:0;min-height:640px;display:flex;align-items:flex-end;background:url('images/terrassement.jpg') center/cover no-repeat}
+.hero::before{content:"";position:absolute;inset:0;background:rgba(22,24,26,.72)}
+.hero .wrap{position:relative;padding-top:120px;padding-bottom:150px}
+.hero h1{font-size:clamp(56px,10vw,120px);max-width:900px}
+.hero h1 span{color:var(--accent)}
+.hero p{font-size:clamp(19px,2.2vw,24px);color:#E3E6E9;max-width:720px;margin:20px 0 32px}
+.trust{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:28px;font-weight:600;color:#E3E6E9}
+.trust span::before{content:"✓ ";color:var(--accent);font-weight:800}
+
+/* Services */
+.grid{display:grid;gap:16px}
+.services{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.card{background:var(--panel);border-top:4px solid var(--accent);padding:26px 24px;display:flex;gap:18px;align-items:flex-start}
+.card svg{flex-shrink:0}
+.card h3{font-size:28px;margin-bottom:6px}
+.card p{margin:0;color:var(--muted)}
+
+/* Gallery */
+.gallery{grid-template-columns:repeat(4,minmax(0,1fr))}
+.gallery figure{margin:0;position:relative;overflow:hidden;background:var(--panel);aspect-ratio:4/3}
+.gallery figure.big{grid-column:span 2;grid-row:span 2;aspect-ratio:auto}
+.gallery img{width:100%;height:100%;object-fit:cover}
+.gallery figcaption{position:absolute;left:0;bottom:0;background:var(--ink);padding:6px 12px;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:17px;letter-spacing:1px}
+
+/* Means / audience */
+.means{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.mean{background:var(--panel);padding:22px;border-top:4px solid var(--accent)}
+.mean h3{font-size:24px;margin-bottom:6px}
+.mean p{margin:0;color:var(--muted);font-size:16px}
+.audience{display:flex;flex-wrap:wrap;gap:12px;margin-top:40px}
+.audience span{border:2px solid var(--line);padding:10px 18px;font-weight:600}
+
+/* Steps */
+.steps{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.step{display:flex;gap:18px;align-items:center;background:var(--panel);padding:22px}
+.step b{width:56px;height:56px;flex-shrink:0;background:var(--accent);color:var(--ink);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:34px}
+.step span{font-weight:600;font-size:19px}
+
+/* Form */
+.form-section{padding:0 0 72px;background:var(--ink)}
+.form-card{position:relative;z-index:2;max-width:900px;margin:-90px auto 0;background:#FFFFFF;color:#16181A;border-top:8px solid var(--accent);padding:44px 44px 36px;box-shadow:0 18px 50px rgba(0,0,0,.45)}
+.form-head{text-align:center;margin-bottom:30px}
+.form-badge{display:inline-block;background:var(--accent);color:#16181A;font-family:var(--display);font-weight:800;font-size:18px;letter-spacing:2px;text-transform:uppercase;padding:6px 14px;margin-bottom:14px}
+.form-head h2{font-size:clamp(38px,5vw,56px);color:#16181A}
+.form-head p{margin:12px 0 0;color:#4A5058;font-size:18px}
+.req{color:#C62828}
+form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field.full{grid-column:1/-1}
+label,legend{font-weight:700;font-size:16px;color:#16181A}
+input,select,textarea{width:100%;font:inherit;font-size:17px;color:#16181A;background:#FFFFFF;border:2px solid #B9BEC5;padding:12px 14px;min-height:54px;border-radius:6px}
+input::placeholder,textarea::placeholder{color:#6B7280}
+input:hover,select:hover,textarea:hover{border-color:#8A9099}
+input:focus,select:focus,textarea:focus{border-color:#16181A;outline:3px solid var(--accent);outline-offset:0}
+textarea{min-height:110px;resize:vertical}
+input:invalid.touched,select:invalid.touched{border-color:#C62828;background:#FFF5F5}
+fieldset{border:0;padding:0;margin:0}
+.checks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:8px}
+.check{display:flex;align-items:center;gap:10px;background:#F4F5F6;border:2px solid #D5D9DE;border-radius:6px;padding:12px;min-height:52px;cursor:pointer;font-weight:600;font-size:16px;color:#16181A}
+.check:hover{border-color:#8A9099}
+.check:has(input:checked){background:#FFF4CC;border-color:#16181A}
+.check input{width:20px;height:20px;min-height:0;accent-color:#16181A;flex-shrink:0}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.form-msg{grid-column:1/-1;padding:16px;font-weight:600;display:none;border-radius:6px}
+.form-msg.ok{display:block;background:#E8F5E9;border:2px solid #2E7D32;color:#1B5E20}
+.form-msg.err{display:block;background:#FFEBEE;border:2px solid #C62828;color:#8E1B1B}
+form .btn{grid-column:1/-1;width:100%;min-height:62px;font-size:26px;background:#16181A;color:var(--accent);border-radius:6px}
+form .btn:hover{background:#2B3036;color:var(--accent)}
+form .btn:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+form .btn[disabled]{opacity:.6;cursor:wait}
+.small{font-size:14px;color:#4A5058;grid-column:1/-1;margin:0;text-align:center}
+
+/* Footer */
+footer{padding:40px 0 100px;border-top:1px solid var(--line);color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+.wa{position:fixed;right:18px;bottom:18px;z-index:30;width:60px;height:60px;border-radius:50%;background:#25D366;display:none;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.4)}
+
+@media (max-width:860px){
+  .checks{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .gallery{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  body{font-size:17px}
+  section{padding:56px 0}
+  form{grid-template-columns:1fr}
+  .form-card{padding:30px 18px 26px;margin-top:-70px}
+  .checks{grid-template-columns:1fr}
+  header.top .btn{display:none}
+  .hero{min-height:560px}
+}
+</style>
+</head>
+<body>
+
+<div class="stripe"></div>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#">M-INFRA<small>VOIRIE · RÉSEAUX DIVERS</small></a>
+    <a class="btn" href="#devis">Demander un devis</a>
+  </div>
+</header>
+
+<main>
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Entreprise de travaux VRD au Maroc</div>
+    <h1>Du terrain nu <span>au projet prêt à bâtir</span></h1>
+    <p>Terrassement, voirie, eau potable, assainissement et réseaux : une seule entreprise pour tous vos travaux VRD.</p>
+    <a class="btn" href="#devis">Recevoir mon devis gratuit sous 48 h</a>
+    <div class="trust"><span>Devis gratuit</span><span>Matériel adapté</span><span>Sécurité aux normes</span><span>Délais respectés</span></div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section id="devis" class="form-section">
+  <div class="wrap">
+    <div class="form-card">
+      <div class="form-head">
+        <div class="form-badge">Devis gratuit sous 48 h</div>
+        <h2>Parlez-nous de votre projet</h2>
+        <p>Remplissez ce formulaire en 1 minute. Les champs marqués <span class="req">*</span> sont obligatoires.</p>
+      </div>
+      <form id="leadForm" novalidate>
+      <div class="field"><label for="nom">Nom complet <span class="req">*</span></label><input id="nom" name="nom" autocomplete="name" required></div>
+      <div class="field"><label for="telephone">Téléphone / WhatsApp <span class="req">*</span></label><input id="telephone" name="telephone" type="tel" autocomplete="tel" inputmode="tel" placeholder="06 00 00 00 00" pattern="^[+0-9 ().-]{8,20}$" required></div>
+      <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email"></div>
+      <div class="field"><label for="ville">Ville du chantier <span class="req">*</span></label><input id="ville" name="ville" autocomplete="address-level2" required></div>
+      <div class="field full"><label for="profil">Vous êtes <span class="req">*</span></label>
+        <select id="profil" name="profil" required>
+          <option value="">Choisissez…</option>
+          <option>Promoteur</option><option>Lotisseur</option><option>Entreprise BTP</option><option>Collectivité</option><option>Industriel</option><option>Particulier</option>
+        </select>
+      </div>
+      <fieldset class="field full">
+        <legend>Type de travaux <span class="req">*</span></legend>
+        <div class="checks">
+          <label class="check"><input type="checkbox" name="travaux" value="Terrassement">Terrassement</label>
+          <label class="check"><input type="checkbox" name="travaux" value="Voirie">Voirie &amp; enrobés</label>
+          <label class="check"><input type="checkbox" name="travaux" value="Eau potable">Eau potable</label>
+          <label class="check"><input type="checkbox" name="travaux" value="Assainissement">Assainissement</label>
+          <label class="check"><input type="checkbox" name="travaux" value="Réseaux secs">Réseaux secs</label>
+          <label class="check"><input type="checkbox" name="travaux" value="Viabilisation complète">Viabilisation complète</label>
+        </div>
+      </fieldset>
+      <div class="field"><label for="surface">Surface ou longueur approximative</label><input id="surface" name="surface" placeholder="Ex. 2 ha, 800 m de réseau…"></div>
+      <div class="field"><label for="demarrage">Démarrage souhaité</label>
+        <select id="demarrage" name="demarrage"><option value="">Choisissez…</option><option>Urgent</option><option>Moins de 3 mois</option><option>Plus de 3 mois</option></select>
+      </div>
+      <div class="field full"><label for="message">Description du projet</label><textarea id="message" name="message" placeholder="Décrivez votre projet, le terrain, les contraintes…"></textarea></div>
+      <div class="hp" aria-hidden="true"><label for="website">Ne pas remplir</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
+      <div id="formMsg" class="form-msg" role="status" aria-live="polite"></div>
+      <button class="btn" type="submit" id="submitBtn">Envoyer ma demande</button>
+      <p class="small">Vos informations servent uniquement à vous recontacter au sujet de votre projet.</p>
+    </form>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="wrap">
+    <div class="eyebrow">Nos métiers</div>
+    <h2 class="section-title">Tous vos travaux VRD</h2>
+    <div class="grid services">
+      <div class="card"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#F5B800" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 19h20"/><path d="M4 19l3-6h6l2 3h5v3"/><path d="M13 13l3-6 4 1"/><path d="M20 8l1 3h-3"/></svg><div><h3>Terrassement</h3><p>Décapage, déblais, remblais, plateformes.</p></div></div>
+      <div class="card"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#F5B800" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21L9 3"/><path d="M19 21L15 3"/><path d="M12 4v3"/><path d="M12 10v3"/><path d="M12 16v4"/></svg><div><h3>Voirie &amp; enrobés</h3><p>Routes, chaussées, parkings, bordures, marquage.</p></div></div>
+      <div class="card"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#F5B800" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c3 4 6 7.5 6 11a6 6 0 0 1-12 0c0-3.5 3-7 6-11z"/></svg><div><h3>Eau potable (AEP)</h3><p>Conduites fonte et PEHD, chambres de vannes, branchements, compteurs, essais de pression.</p></div></div>
+      <div class="card"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#F5B800" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 3v4"/><path d="M12 17v4"/><path d="M3 12h4"/><path d="M17 12h4"/></svg><div><h3>Assainissement</h3><p>Eaux usées et pluviales, buses béton, regards, avaloirs, branchements.</p></div></div>
+      <div class="card"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#F5B800" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg><div><h3>Réseaux secs</h3><p>Électricité, télécom, fibre, éclairage public.</p></div></div>
+      <div class="card"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#F5B800" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M4 21V10l5-4 5 4v11"/><path d="M14 21v-8h6v8"/></svg><div><h3>Viabilisation</h3><p>Lotissements, terrains, zones d'activité, clés en main.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="realisations" style="padding-top:0">
+  <div class="wrap">
+    <div class="eyebrow">En images</div>
+    <h2 class="section-title">Sur le terrain</h2>
+    <div class="grid gallery">
+      <figure class="big"><img src="images/aep-conduite-maroc.jpg" alt="Pose d'une conduite d'eau potable à la pelleteuse" loading="lazy"><figcaption>Pose de conduites</figcaption></figure>
+      <figure><img src="images/aep-chambre-vannes.jpg" alt="Équipement d'une chambre de vannes" loading="lazy"><figcaption>Chambre de vannes</figcaption></figure>
+      <figure><img src="images/aep-lotissement.jpg" alt="Réseau d'eau potable en lotissement" loading="lazy"><figcaption>Réseau AEP</figcaption></figure>
+      <figure><img src="images/aep-soudure-pehd.jpg" alt="Soudure bout à bout de conduites PEHD" loading="lazy"><figcaption>Soudure PEHD</figcaption></figure>
+      <figure><img src="images/ass-regard.jpg" alt="Pose d'un regard de visite" loading="lazy"><figcaption>Regard de visite</figcaption></figure>
+      <figure><img src="images/ass-buses-beton.jpg" alt="Pose de buses en béton armé" loading="lazy"><figcaption>Buses béton</figcaption></figure>
+      <figure><img src="images/voirie-enrobe.jpg" alt="Mise en œuvre d'enrobé" loading="lazy"><figcaption>Voirie &amp; enrobé</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- MEANS -->
+<section id="moyens" style="padding-top:0">
+  <div class="wrap">
+    <div class="eyebrow">Notre force sur le terrain</div>
+    <h2 class="section-title">Les moyens de livrer dans les délais</h2>
+    <div class="grid means">
+      <div class="mean"><h3>Engins de chantier</h3><p>Adaptés aux besoins de chaque chantier.</p></div>
+      <div class="mean"><h3>Topographie</h3><p>Implantation, nivellement, contrôle qualité.</p></div>
+      <div class="mean"><h3>Outils &amp; équipements</h3><p>Terrassement, voirie, infrastructures.</p></div>
+      <div class="mean"><h3>Sécurité</h3><p>Protection collective et individuelle aux normes.</p></div>
+      <div class="mean"><h3>Suivi de projet</h3><p>Gestion administrative et informatique dédiée.</p></div>
+    </div>
+    <div class="audience" aria-label="Nos clients">
+      <span>Promoteurs</span><span>Lotisseurs</span><span>Entreprises BTP</span><span>Collectivités</span><span>Industriels</span><span>Particuliers</span>
+    </div>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="eyebrow">Simple et rapide</div>
+    <h2 class="section-title">Comment ça marche</h2>
+    <div class="grid steps">
+      <div class="step"><b>1</b><span>Vous remplissez le formulaire</span></div>
+      <div class="step"><b>2</b><span>Nous étudions votre projet</span></div>
+      <div class="step"><b>3</b><span>Vous recevez votre devis gratuit sous 48 h</span></div>
+    </div>
+  </div>
+</section>
+
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><strong style="color:#fff;font-family:var(--display);font-size:24px">M-INFRA</strong><br>Voirie et Réseaux Divers</div>
+    <div>[ADRESSE] · [TÉLÉPHONE] · [EMAIL]</div>
+    <div>© <span id="year"></span> M-INFRA</div>
+  </div>
+</footer>
+
+<a class="wa" id="waBtn" href="#" target="_blank" rel="noopener" aria-label="Nous écrire sur WhatsApp">
+  <svg width="32" height="32" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.5 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.8-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>
+</a>
+
+<script>
+/* ============ À CONFIGURER ============ */
+const CONFIG = {
+  // Numéro WhatsApp au format international sans + ni espaces, ex. "212600000000". Laisser vide pour masquer le bouton.
+  WHATSAPP: "",
+  // ID de votre Pixel Meta (Facebook / Instagram), ex. "123456789012345". Laisser vide pour désactiver.
+  META_PIXEL_ID: ""
+};
+/* L'URL du script Google se règle dans api/lead.js (ou la variable GOOGLE_SCRIPT_URL sur Vercel). */
+/* ====================================== */
+
+/* Pixel Meta : PageView à l'ouverture, Lead quand une demande est bien enregistrée, Contact au clic WhatsApp */
+if (/^\d{10,20}$/.test(CONFIG.META_PIXEL_ID)) {
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', CONFIG.META_PIXEL_ID);
+  fbq('track', 'PageView');
+}
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+if (CONFIG.WHATSAPP) {
+  const wa = document.getElementById('waBtn');
+  wa.href = 'https://wa.me/' + CONFIG.WHATSAPP + '?text=' + encodeURIComponent("Bonjour M-INFRA, je souhaite un devis pour des travaux VRD.");
+  wa.style.display = 'flex';
+  wa.addEventListener('click', () => { if (typeof fbq === 'function') fbq('track', 'Contact'); });
+}
+
+const form = document.getElementById('leadForm');
+const msg = document.getElementById('formMsg');
+const btn = document.getElementById('submitBtn');
+const DEBUG = new URLSearchParams(location.search).has('debug');   // ajoutez ?debug=1 pour voir le détail des erreurs
+let sending = false;
+
+form.querySelectorAll('input,select').forEach(el => el.addEventListener('blur', () => el.classList.add('touched')));
+
+function show(type, text){
+  msg.className = 'form-msg ' + type; msg.textContent = text;
+  msg.scrollIntoView({ behavior: 'smooth', block: 'center' });   // le message reste visible, surtout sur mobile
+}
+
+function newId() {
+  return (crypto && crypto.randomUUID) ? crypto.randomUUID()
+    : Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+}
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (sending) return;                                             // pas de double clic
+  form.querySelectorAll('input,select').forEach(el => el.classList.add('touched'));
+  const travaux = [...form.querySelectorAll('input[name="travaux"]:checked')].map(c => c.value);
+
+  if (!form.checkValidity()) { show('err', "Merci de remplir les champs obligatoires (*) et de vérifier votre numéro de téléphone."); form.querySelector(':invalid').focus(); return; }
+  if (!travaux.length) { show('err', "Merci de choisir au moins un type de travaux."); form.querySelector('input[name="travaux"]').focus(); return; }
+
+  const payload = Object.fromEntries(new FormData(form).entries());
+  payload.travaux = travaux.join(', ');
+  payload.source = location.search ? location.search.slice(1) : 'direct';
+  payload.page = location.href.split('?')[0];
+  payload.rid = newId();                                           // identifiant unique : évite les doublons
+
+  sending = true; btn.disabled = true; btn.textContent = 'Envoi en cours…';
+  try {
+    let res, lastErr;
+    for (let attempt = 1; attempt <= 2; attempt++) {               // 1 nouvel essai si le réseau coupe (même identifiant → pas de doublon)
+      try {
+        const r = await fetch('/api/lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+          cache: 'no-store'
+        });
+        res = await r.json().catch(() => ({ ok: false, error: 'Réponse illisible (HTTP ' + r.status + ')' }));
+        if (res.ok) break;
+        lastErr = new Error(res.error || ('HTTP ' + r.status));
+        if (r.status < 500) break;                                 // erreur de saisie : inutile de réessayer
+      } catch (netErr) { lastErr = netErr; }
+    }
+    if (!res || !res.ok) throw lastErr || new Error('Envoi impossible');
+
+    form.reset();
+    form.querySelectorAll('.touched').forEach(el => el.classList.remove('touched'));
+    show('ok', "Merci ! Votre demande est bien reçue. Notre équipe vous contacte pour votre devis gratuit sous 48 h.");
+    if (typeof fbq === 'function') fbq('track', 'Lead', { content_name: 'Devis VRD', content_category: travaux.join(', ') });
+  } catch (err) {
+    console.error('[M-INFRA] Envoi :', err);
+    show('err', "L'envoi a échoué. Merci de réessayer dans un instant" + (CONFIG.WHATSAPP ? ", ou contactez-nous sur WhatsApp." : ".") + (DEBUG ? " [Détail : " + err.message + "]" : ""));
+  } finally {
+    sending = false; btn.disabled = false; btn.textContent = 'Envoyer ma demande';
+  }
+});
+</script>
+</body>
+</html>
