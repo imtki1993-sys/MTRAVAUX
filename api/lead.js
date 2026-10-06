@@ -45,7 +45,7 @@ module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
 
   // Diagnostic sans rien écrire : ouvrir https://VOTRE-SITE/api/lead dans le navigateur
-  if (req.method === 'GET') {   // toute ouverture dans le navigateur = diagnostic (n'écrit rien)
+  if (req.method !== 'POST') {  // toute ouverture dans le navigateur (GET/HEAD…) = diagnostic, n'écrit rien
     const out = { relais: 'en ligne', urlConfiguree: RAW_SCRIPT_URL !== 'COLLEZ_ICI_L_URL_DE_VOTRE_SCRIPT_GOOGLE',
                   urlValide: URL_OK, url: URL_OK ? mask(SCRIPT_URL) : String(RAW_SCRIPT_URL).slice(0, 40) + '…',
                   source: process.env.GOOGLE_SCRIPT_URL ? 'variable Vercel GOOGLE_SCRIPT_URL' : 'fichier api/lead.js' };
