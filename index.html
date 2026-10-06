@@ -342,7 +342,7 @@ form.addEventListener('submit', async (e) => {
   payload.page = location.href.split('?')[0];
   payload.rid = newId();                                           // identifiant unique : évite les doublons
 
-  sending = true; btn.disabled = true; btn.textContent = 'Envoi en cours…';
+  sending = true; btn.disabled = true; btn.textContent = 'Envoi en cours… (quelques secondes)';
   try {
     let res, lastErr;
     for (let attempt = 1; attempt <= 2; attempt++) {               // 1 nouvel essai si le réseau coupe (même identifiant → pas de doublon)
@@ -363,7 +363,7 @@ form.addEventListener('submit', async (e) => {
 
     form.reset();
     form.querySelectorAll('.touched').forEach(el => el.classList.remove('touched'));
-    show('ok', "Merci ! Votre demande est bien reçue. Notre équipe vous contacte pour votre devis gratuit sous 48 h.");
+    show('ok', "Merci ! Votre demande est bien reçue. Notre équipe vous contacte pour votre devis gratuit sous 48 h." + (DEBUG && res.sheet ? " [Enregistrée : " + res.sheet + " › onglet " + res.onglet + " › ligne " + res.ligne + "]" : ""));
     if (typeof fbq === 'function') fbq('track', 'Lead', { content_name: 'Devis VRD', content_category: travaux.join(', ') });
   } catch (err) {
     console.error('[M-INFRA] Envoi :', err);
