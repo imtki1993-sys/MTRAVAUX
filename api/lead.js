@@ -19,8 +19,8 @@ const FIELDS = { nom: 120, telephone: 30, email: 120, ville: 120, profil: 60, tr
 module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
 
-  // Diagnostic sans rien écrire : ouvrir https://VOTRE-SITE/api/lead?check=1
-  if (req.method === 'GET' && req.query && req.query.check) {
+  // Diagnostic sans rien écrire : ouvrir https://VOTRE-SITE/api/lead dans le navigateur
+  if (req.method === 'GET') {   // toute ouverture dans le navigateur = diagnostic (n'écrit rien)
     const out = { relais: 'en ligne', urlConfiguree: RAW_SCRIPT_URL !== 'COLLEZ_ICI_L_URL_DE_VOTRE_SCRIPT_GOOGLE',
                   urlValide: URL_OK, url: URL_OK ? mask(SCRIPT_URL) : String(RAW_SCRIPT_URL).slice(0, 40) + '…',
                   source: process.env.GOOGLE_SCRIPT_URL ? 'variable Vercel GOOGLE_SCRIPT_URL' : 'fichier api/lead.js' };
@@ -37,7 +37,7 @@ module.exports = async (req, res) => {
 
   if (req.method !== 'POST') return res.status(405).json({ ok: false, error: 'Méthode non autorisée' });
   if (!URL_OK) {
-    return res.status(500).json({ ok: false, error: "URL du script Google manquante ou invalide dans api/lead.js (ouvrez /api/lead?check=1)" });
+    return res.status(500).json({ ok: false, error: "URL du script Google manquante ou invalide dans api/lead.js (ouvrez /api/lead dans le navigateur)" });
   }
 
   let body = req.body || {};
@@ -66,10 +66,13 @@ module.exports = async (req, res) => {
     let data;
     try { data = JSON.parse(text); }
     catch {
-      return res.status(502).json({ ok: false, error: 'Le script Google ne répond pas en JSON (HTTP ' + r.status + ') : accès « Tout le monde » ? version 4 déployée ?' });
+      return res.status(502).json({ ok: false, error: 'Le script Google ne répond pas en JSON (HTTP ' + r.status + ') : accès « Tout le monde » ? version 5 déployée ?' });
     }
     if (!data.ok) return res.status(502).json({ ok: false, error: data.error || 'Erreur du script Google' });
-    return res.status(200).json({ ok: true, duplicate: !!data.duplicate });
+    if (data.saved !== true) {
+      return res.status(502).json({ ok: false, error: "Le script Google déployé est une ANCIENNE version (il n'enregistre pas) : collez google-apps-script.gs v5 puis Déployer › Gérer les déploiements › Nouvelle version" });
+    }
+    return res.status(200).json({ ok: true, duplicate: !!data.duplicate, sheet: data.sheet, onglet: data.onglet, ligne: data.ligne });
   } catch (err) {
     return res.status(504).json({ ok: false, error: err.name === 'AbortError' ? 'Google ne répond pas (délai dépassé)' : String(err.message || err) });
   } finally {
