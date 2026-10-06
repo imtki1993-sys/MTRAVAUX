@@ -337,15 +337,24 @@ form.addEventListener('submit', async (e) => {
 
   btn.disabled = true; btn.textContent = 'Envoi en cours…';
   try {
-    const res = await sendToSheet(data);
+    let res;
+    try {
+      res = await sendToSheet(new URLSearchParams(data));      // 1) envoi avec confirmation (JSONP)
+    } catch (jsonpErr) {
+      debugLog('JSONP impossible → envoi de secours en POST', jsonpErr);
+      data.delete('callback');
+      await fetch(CONFIG.SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: data });  // 2) secours
+      res = { ok: true, fallback: true };
+    }
     if (!res || !res.ok) throw new Error((res && res.error) || 'Réponse invalide');
+    debugLog('Demande envoyée', res);
     form.reset();
     form.querySelectorAll('.touched').forEach(el => el.classList.remove('touched'));
     show('ok', "Merci ! Votre demande est bien reçue. Notre équipe vous contacte pour votre devis gratuit sous 48 h.");
     if (typeof fbq === 'function') fbq('track', 'Lead', { content_name: 'Devis VRD', content_category: travaux.join(', ') });
   } catch (err) {
     console.error('Envoi Google Sheets :', err);
-    show('err', "L'envoi a échoué. Vérifiez votre connexion et réessayez" + (CONFIG.WHATSAPP ? ", ou contactez-nous sur WhatsApp." : "."));
+    show('err', "L'envoi a échoué. Vérifiez votre connexion et réessayez" + (CONFIG.WHATSAPP ? ", ou contactez-nous sur WhatsApp." : ".") + (DEBUG ? " [Détail : " + err.message + "]" : ""));
   } finally {
     btn.disabled = false; btn.textContent = 'Envoyer ma demande';
   }
@@ -353,16 +362,23 @@ form.addEventListener('submit', async (e) => {
 
 /* Envoi par JSONP (requête GET + réponse de confirmation) :
    fonctionne depuis n'importe quel site, sans blocage CORS, et confirme que la ligne est écrite. */
+/* Mode diagnostic : ajoutez ?debug=1 à l'adresse du site pour voir le détail des erreurs */
+const DEBUG = new URLSearchParams(location.search).has('debug');
+function debugLog(label, info) {
+  console.log('[M-INFRA] ' + label, info || '');
+  if (DEBUG) show('ok', '[debug] ' + label + (info ? ' : ' + (info.message || JSON.stringify(info)) : ''));
+}
+
 function sendToSheet(params) {
   return new Promise((resolve, reject) => {
     const cb = 'mInfraCb_' + Date.now() + '_' + Math.floor(Math.random() * 1e6);
     const s = document.createElement('script');
-    const timer = setTimeout(() => { cleanup(); reject(new Error('Délai dépassé')); }, 20000);
+    const timer = setTimeout(() => { cleanup(); reject(new Error('Pas de réponse du script Google (redéployé en version 3 ?)')); }, 12000);
     function cleanup() { clearTimeout(timer); delete window[cb]; s.remove(); }
     window[cb] = (json) => { cleanup(); resolve(json); };
     params.set('callback', cb);
     s.src = CONFIG.SCRIPT_URL + (CONFIG.SCRIPT_URL.includes('?') ? '&' : '?') + params.toString();
-    s.onerror = () => { cleanup(); reject(new Error('Script Google inaccessible')); };
+    s.onerror = () => { cleanup(); reject(new Error('Script Google refusé par le navigateur (version 3 non déployée ou accès non « Tout le monde »)')); };
     document.body.appendChild(s);
   });
 }
